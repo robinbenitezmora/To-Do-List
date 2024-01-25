@@ -4,9 +4,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -141,5 +144,61 @@ class TitleBar extends JPanel {
   litteText.setPreferredSize(new Dimension(200, 60));
   litteText.setHorizontalAlignment(JLabel.CENTER);
   this.add(litteText);
+ }
+}
+
+class AppFrame extends JFrame {
+ private TitleBar title;
+ private Footer footer;
+ private List list;
+
+ private JButton newTask;
+ private JButton clear;
+
+ AppFrame() {
+  this.setSize(400, 600);
+  this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  this.setVisible(true);
+
+  title = new TitleBar();
+  footer = new Footer();
+  list = new List();
+
+  this.add(title, BorderLayout.NORTH);
+  this.add(footer, BorderLayout.SOUTH);
+  this.add(list, BorderLayout.CENTER);
+
+  newTask = footer.getNewTask();
+  clear = footer.getClear();
+
+  addListener();
+ }
+
+ public void addListener() {
+  newTask.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mousePressed(MouseEvent e) {
+    Task task = new Task();
+    list.add(task);
+    list.updateNumbers();
+
+    task.getDone().addMouseListener(new MouseAdapter() {
+     @Override
+     public void mousePressed(MouseEvent e) {
+      task.changeState();
+      list.updateNumbers();
+      revalidate();
+     }
+    });
+   }
+  });
+
+  clear.addMouseListener(new MouseAdapter() {
+   @Override
+   public void mousePressed(MouseEvent e) {
+    list.removeCompletedTasks();
+    repaint();
+   }
+  });
  }
 }
