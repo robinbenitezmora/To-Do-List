@@ -129,3 +129,17 @@ class Footer extends JPanel {
   return clear;
  }
 }
+
+class TitleBar extends JPanel {
+ Color lightColor = new Color(252, 221, 176);
+
+ TitleBar() {
+  this.setPreferredSize(new Dimension(400, 60));
+  this.setBackground(lightColor);
+  JLabel litteText = new JLabel("To Do List");
+  litteText.setFont(new Font("Serif", Font.BOLD, 30));
+  litteText.setPreferredSize(new Dimension(200, 60));
+  litteText.setHorizontalAlignment(JLabel.CENTER);
+  this.add(litteText);
+ }
+}
