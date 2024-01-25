@@ -14,9 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import javafx.scene.layout.Border;
-import javafx.scene.shape.Box;
-
 class Task extends JPanel {
  JLabel index;
  JTextField taskName;
